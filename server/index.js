@@ -11,8 +11,8 @@ const io= new Server(server,{
     cors: {
         origin: "*",
         methods: ["GET","POST"]
-    }
-})
+    },
+});
 
 io.on("connection", (socket) => {
     console.log("User Connected :",socket.id);
@@ -20,14 +20,14 @@ io.on("connection", (socket) => {
     socket.on("join_Chat",(data) => {
         socket.join(data);
         console.log("User with ID - ",socket.id," joined the room : ",data);
-    })
+    });
     socket.on("send_msg",(data) => {
         socket.to(data.chat).emit("receive_msg",data);
-    })
+    });
     socket.on("disconnect", () => {
         console.log("User Disconnected",socket.id);
-    })
-})
+    });
+});
 
 server.listen(3001,()=>{
     console.log("Server Running");
