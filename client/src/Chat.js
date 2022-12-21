@@ -13,7 +13,7 @@ function Chat({socket,uname,chatID}) {
                 chat : chatID,
                 author : uname,
                 msg1 : msg,
-                time : new Date(Date.now()).getHours() + "-" + new Date(Date.now()).getMinutes()
+                time : new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             };
 
             await socket.emit("send_msg",metaMsg);
@@ -30,7 +30,7 @@ function Chat({socket,uname,chatID}) {
   return (
     <div className='chat-window'>
         <div className="chat-header">
-            <p>LIVE CHAT</p>
+            <p>LIVE CHAT : {chatID}</p>
         </div>
         <div className="chat-body">
             <ScrollToBottom className='message-container'>
@@ -43,7 +43,7 @@ function Chat({socket,uname,chatID}) {
                             </div>
                             <div className='message-meta'>
                                 <p id="time">{msgcon.time}</p>
-                                <p id="author">{msgcon.author}</p>
+                                <p id="author">{uname!==msgcon.author?msgcon.author:"You"}</p>
                             </div>
                         </div>
                     </div>
@@ -54,6 +54,9 @@ function Chat({socket,uname,chatID}) {
         <div className="chat-footer">
             <input type='text' value={msg} placeholder='Hey...' onChange={(event) => {setMsg(event.target.value)}} onKeyDown={(event)=>{event.key==="Enter" && sendMsg();}}></input>
             <button onClick={sendMsg}>&#9658;</button>
+        </div>
+        <div className='base'>
+            <p>Site Crafted by Vigneshwaran J</p>
         </div>
     </div>
   )
